@@ -1,0 +1,2 @@
+#allow hal_power_default debugfs:file { open write };
+debugfs_tracing_access(hal_power_default)

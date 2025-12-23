@@ -1,0 +1,153 @@
+// Copyright 2018 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+// Core dependencies
+
+package {
+    default_applicable_licenses: ["device_ti_beagle_x15_gpu_license"],
+}
+
+// Added automatically by a large-scale-change that took the approach of
+// 'apply every license found to every target'. While this makes sure we respect
+// every license restriction, it may not be entirely correct.
+//
+// e.g. GPL in an MIT project might only apply to the contrib/ directory.
+//
+// Please consider splitting the single license below into multiple licenses,
+// taking care not to lose any license_kind information, and overriding the
+// default license using the 'licenses: [...]' property on targets as needed.
+//
+// For unused files, consider creating a 'fileGroup' with "//visibility:private"
+// to attach the license to, and including a comment whether the files may be
+// used in the current project.
+// See: http://go/android-license-faq
+license {
+    name: "device_ti_beagle_x15_gpu_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-BSD",
+        "SPDX-license-identifier-MIT",
+    ],
+    license_text: [
+        "NOTICE",
+    ],
+}
+
+cc_prebuilt_library_shared {
+    name: "libIMGegl",
+    srcs: ["libIMGegl.so"],
+    shared_libs: ["libc", "libz","liblog", "libsync", "libhardware", "libsrv_um"],
+    required: ["libpvrANDROID_WSEGL"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libglslcompiler",
+    srcs: ["libglslcompiler.so"],
+    shared_libs: ["libc", "libc++_shared", "libm", "libsrv_um", "libusc"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libpvrANDROID_WSEGL",
+    srcs: ["libpvrANDROID_WSEGL.so"],
+    shared_libs: ["libc", "libm", "libhardware", "libsrv_um", "libnativewindow", "libsync"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libsrv_um",
+    srcs: ["libsrv_um.so"],
+    shared_libs: ["libc", "libdl", "libsync", "libdrm", "libutilscallstack", "libutils", "libc++_shared", "liblog"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libusc",
+    srcs: ["libusc.so"],
+    shared_libs: ["libc", "libm", "libsrv_um"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+// Pulled in as-needed
+
+cc_prebuilt_library_shared {
+    name: "gralloc.vsoc_riscv64",
+    srcs: ["gralloc.vsoc_riscv64.so"],
+    shared_libs: ["libc", "libsync", "libdrm", "libutilscallstack", "libutils", "libc++_shared", "libdmabufheap", "libion", "libdl", "liblog", "libhardware", "libsrv_um"],
+    relative_install_path: "hw",
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libEGL_powervr",
+    srcs: ["libEGL_powervr.so"],
+    shared_libs: ["libIMGegl", "libm", "libc"],
+    relative_install_path: "egl",
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libGLESv1_CM_powervr",
+    srcs: ["libGLESv1_CM_powervr.so"],
+    shared_libs: ["libIMGegl", "libc", "libm", "libsrv_um", "libusc", "libsync", "liblog"],
+    relative_install_path: "egl",
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libGLESv2_powervr",
+    srcs: ["libGLESv2_powervr.so"],
+    shared_libs: ["libIMGegl", "libc", "libm", "libsrv_um", "libusc", "liblog",  "libsync"],
+    required: ["libglslcompiler"],
+    relative_install_path: "egl",
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE
+}
+
+cc_prebuilt_library_shared {
+    name: "libPVRScopeServices",
+    srcs: ["libPVRScopeServices.so"],
+    shared_libs: ["libc++_shared", "libc", "libm", "libdl", "liblog", "libsync"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE, _Znaj, _Znwj
+}
+
+cc_prebuilt_library_shared {
+    name: "libc++_shared",
+    srcs: ["libc++_shared.so"],
+    shared_libs: ["libc", "libm", "libdl"],
+    strip: { none: true, },
+    vendor: true,
+    allow_undefined_symbols: true,  // LIBC_PRIVATE, _Znaj, _Znwj
+}

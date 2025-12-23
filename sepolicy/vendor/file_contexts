@@ -1,0 +1,110 @@
+##########################
+# Devices
+#
+/dev/block/by-name/misc 				u:object_r:misc_block_device:s0
+/dev/block/by-name/boot_[ab] 			u:object_r:boot_block_device:s0
+/dev/block/by-name/init_boot_[ab] 		u:object_r:boot_block_device:s0
+/dev/block/by-name/vendor_boot_[ab] 	u:object_r:boot_block_device:s0
+/dev/block/by-name/vbmeta_[ab] 			u:object_r:ab_block_device:s0
+/dev/block/by-name/vbmeta_system_[ab] 	u:object_r:ab_block_device:s0
+/dev/block/by-name/super 				u:object_r:super_block_device:s0
+/dev/block/by-name/userdata 			u:object_r:userdata_block_device:s0
+/dev/block/by-name/metadata 			u:object_r:metadata_block_device:s0
+
+/dev/block/zram0  						u:object_r:swap_block_device:s0
+
+/dev/block/dm-41 						u:object_r:dm_device_file:s0
+#dlkm
+/dev/block/dm-4 						u:object_r:system_dlkm_file:s0
+
+#vendor
+/dev/block/dm-5 						u:object_r:dm_vendor_file:s0
+
+#MMC0 SD Card / MMC2 EMMC
+/dev/block/mmcblk[02]p[0-9] 			u:object_r:mmcblkXpXX_partition:s0
+/dev/block/mmcblk[02]p[0-9]{2}	 		u:object_r:mmcblkXpXX_partition:s0
+
+/dev/dri                        		u:object_r:gpu_device:s0
+/dev/dri/card0                  		u:object_r:gpu_device:s0
+/dev/dri/card1                  		u:object_r:gpu_device:s0
+/dev/dri/card2                  		u:object_r:gpu_device:s0
+
+/dev/binderfs/vndbinder u:object_r:vndbinder_device:s0
+
+# SD & EMMC
+/sys/devices/platform/soc/d428[01]000.sdh/mmc_host/mmc[02]/mmc[02]:[0-9a-fA-F]{4}/block/mmcblk[02]/queue(/.*)?  u:object_r:sysfs_iio_devices:s0
+/sys/devices/platform/soc/d428[01]000.sdh/mmc_host/mmc[02]/mmc[02]:[0-9a-fA-F]{4}/block/mmcblk[02](/.*)? u:object_r:sysfs_iio_devices:s0
+/sys/devices/platform/soc/d4012800.i2c/i2c-4/4-0062/power_supply/cw2015-battery(/.*)? u:object_r:sysfs:s0
+/sys/kernel/debug/tracing(/.*)? u:object_r:debugfs_tracing_instances:s0
+
+/sys/kernel/tracing/trace_marker u:object_r:debugfs_tracing_instances:s0
+
+## Data
+/data/misc/keystore 					u:object_r:keystore_data_file:s0
+
+/data/misc/bluedroid u:object_r:vendor_net_data_file:s0
+/data/misc/dhcp u:object_r:vendor_net_data_file:s0
+/data/misc/wifi u:object_r:vendor_net_data_file:s0
+/data/misc/wifi/wpa_supplicant u:object_r:vendor_net_data_file:s0
+
+
+
+#############################
+# Vendor files
+#
+/vendor/bin/hw/android\.hardware\.audio\.service 					u:object_r:hal_audio_default_exec:s0
+/vendor/bin/hw/android\.hardware\.authsecret@1\.0-service 			u:object_r:hal_authsecret_default_exec:s0
+/vendor/bin/hw/android\.hardware\.authsecret-service\.example 		u:object_r:hal_authsecret_default_exec:s0
+/vendor/bin/hw/android\.hardware\.bluetooth@1\.0-service 			u:object_r:hal_bluetooth_default_exec:s0
+/vendor/bin/hw/android\.hardware\.cas@1\.2-service 					u:object_r:hal_cas_default_exec:s0
+/vendor/bin/hw/android\.hardware\.gatekeeper@1\.0-service\.software u:object_r:hal_gatekeeper_default_exec:s0
+/vendor/bin/hw/android\.hardware\.gatekeeper-service\.trusty     	u:object_r:hal_gatekeeper_default_exec:s0
+
+#/vendor/bin/hw/android\.hardware\.graphics\.allocator@2\.0-service u:object_r:hal_graphics_allocator_default_exec:s0
+#/vendor/bin/hw/android\.hardware\.graphics\.composer@2\.1-service u:object_r:hal_graphics_composer_default_exec:s0
+#/vendor/bin/hw/android\.hardware\.graphics\.allocator@2\.0-service  u:object_r:hal_graphics_allocator_default_exec:s0
+#/vendor/bin/hw/android\.hardware\.graphics\.composer@2\.1-service   	u:object_r:hal_graphics_composer_default_exec:s0
+
+/vendor/bin/hw/android\.hardware\.graphics\.allocator-service\.arv  		u:object_r:hal_graphics_allocator_default_exec:s0
+/vendor/bin/hw/android\.hardware\.graphics\.composer-service\.arv   		u:object_r:hal_graphics_composer_default_exec:s0
+/vendor/lib64/hw/android\.hardware\.graphics\.mapper@4\.0-impl\.arv\.so    	u:object_r:same_process_hal_file:s0
+
+/vendor/lib64/hw/memtrack\.arv\.so										 u:object_r:same_process_hal_file:s0
+/vendor/lib64/hw/gralloc\.default\.so     								 u:object_r:same_process_hal_file:s0
+
+
+/vendor/bin/hw/android\.hardware\.health-service\.example 					u:object_r:hal_health_default_exec:s0
+/vendor/bin/hw/android\.hardware\.health@2\.1-service 						u:object_r:hal_health_default_exec:s0
+/vendor/bin/hw/android\.hardware\.keymaster@4\.0-service 					u:object_r:hal_keymaster_default_exec:s0
+
+/vendor/bin/hw/android\.hardware\.memtrack@1\.0-service 					u:object_r:hal_memtrack_default_exec:s0
+
+/vendor/bin/hw/android\.hardware\.input\.classifier@1\.0-service\.default 	u:object_r:hal_input_classifier_default_exec:s0
+/vendor/bin/hw/android\.hardware\.power-service\.example 					u:object_r:hal_power_default_exec:s0
+/vendor/bin/hw/android\.hardware\.power\.stats-service\.example 			u:object_r:hal_power_stats_default_exec:s0
+/vendor/bin/hw/android\.hardware\.power\.stats@1\.0-service\.mock  			u:object_r:hal_power_stats_default_exec:s0
+
+/vendor/bin/hw/android\.hardware\.wifi-service 								u:object_r:hal_wifi_default_exec:s0
+
+/vendor/bin/hw/android\.hardware\.configstore@1\.1-service 					u:object_r:hal_configstore_default_exec:s0
+
+/vendor/lib/modules(/.*)? u:object_r:vendor_file:s0
+/vendor/lib/firmware(/.*)? u:object_r:vendor_file:s0
+
+/vendor/lib(64)?/egl/libEGL_mesa\.so          u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/egl/libGLESv1_CM_mesa\.so    u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/egl/libGLESv2_mesa\.so       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/dri/libgallium_dri\.so       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/dri/kms_swrast_dri\.so       u:object_r:same_process_hal_file:s0
+
+/vendor/lib(64)?/hw/android\.hardware\.audio\.effect@6\.0-impl\.so       u:object_r:same_process_hal_file:s0
+
+/vendor/lib(64)?/libdrm.so  u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android\.hardware\.graphics\.mapper@2\.0-impl\.so   u:object_r:same_process_hal_file:s0
+/vendor/bin/hw/android\.hardware\.graphics\.allocator@4\.0-service\.minigbm   u:object_r:hal_graphics_allocator_default_exec:s0
+
+
+# not yet AOSP HALs
+/vendor/bin/hw/android\.hardware\.camera\.provider@2\.7-service-google u:object_r:hal_camera_default_exec:s0
+/vendor/bin/hw/android\.hardware\.rebootescrow-service\.default        u:object_r:hal_rebootescrow_default_exec:s0
+/vendor/bin/hw/android\.hardware\.contexthub@1\.1-service\.mock        u:object_r:hal_contexthub_default_exec:s0

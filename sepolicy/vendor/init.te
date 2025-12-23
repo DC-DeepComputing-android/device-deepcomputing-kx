@@ -1,0 +1,42 @@
+# /dev/tty* I/O. Needed for /dev/ttyS0
+allow init serial_device:chr_file rw_file_perms;
+
+# Write to /configfs files. Needed only for /config/usb_gadget subtree.
+allow init configfs:file w_file_perms;
+allow init configfs:lnk_file create;
+
+# Add loadable modules. Needed for usbfunc:diag, usbfunc:diag, usbfunc:gsi, usbfunc:qdss modules.
+allow init kernel:system module_request;
+
+# init relabel vbmeta* and boot* symlinks under /dev/block/by-name/.
+allow init ab_block_device:lnk_file relabelto;
+allow init boot_block_device:lnk_file relabelto;
+
+# init needs to tune block device
+allow init sysfs_devices_block:file w_file_perms;
+
+# /mnt/sdcard -> /storage/self/primary symlink is deprecated. Ignore attempts to
+# create it. This denial is fixed in core policy in Android R aosp/943799.
+dontaudit init tmpfs:lnk_file create;
+
+# permit mount of virtiofs on /mnt/vendor/shared
+allow init mnt_vendor_file:dir mounton;
+
+allow init debugfs:dir { rw_file_perms relabelto };
+allow init debugfs_devices_deferred:file { create getattr setattr relabelto relabelfrom };
+#allow init debugfs_devices_deferred:file { rw_file_perms  getattr  relabelto relabelfrom };
+allow init debugfs_mmc:dir  { relabelto relabelfrom };
+allow init debugfs_mmc:file { create getattr relabelfrom };
+allow init debugfs_tracing_instances:dir  relabelfrom;
+allow init debugfs_wakeup_sources:file { getattr relabelfrom };
+allow init debugfs_kprobes:dir relabelfrom;
+allow init debugfs_kprobes:file { relabelfrom  getattr };
+
+#allow init vendor_file:blk_file { relabelto getattr };
+allow init dm_vendor_file:blk_file { relabelto getattr };
+allow init system_dlkm_file:blk_file  { relabelto getattr };
+allow init sysfs:blk_file  { relabelto read  open  getattr };
+#allow init sysfs:file { open write };
+allow init sysfs_iio_devices:file { open write };
+allow init vendor_init:key write; 
+allow init mmcblkXpXX_partition:blk_file relabelto;

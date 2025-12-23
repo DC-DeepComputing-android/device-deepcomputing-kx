@@ -1,0 +1,7 @@
+allow ueventd metadata_file:dir search;
+
+allow ueventd debugfs:dir { rw_file_perms relabelto };
+allow ueventd sysfs:blk_file { getattr setattr relabelfrom create };
+allow ueventd system_dlkm_file:blk_file { getattr setattr create };
+#allow ueventd vendor_file:blk_file { getattr setattr };
+allow ueventd dm_vendor_file:blk_file { getattr setattr };

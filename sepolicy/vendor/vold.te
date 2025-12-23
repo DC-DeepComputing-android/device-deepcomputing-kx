@@ -1,0 +1,10 @@
+allow vold kernel:system module_request;
+
+# vold will access /mnt/vendor/shared for unknown reasons
+allow vold mnt_vendor_file:dir r_dir_perms;
+
+#allow vold device:blk_file { read write open ioctl};
+allow vold dm_device_file:blk_file { getattr read open write };
+allow vold loop_devices:blk_file { open ioctl read write };
+allow vold loop_devices:file { open ioctl read write };
+allow vold sysfs_iio_devices:file write;

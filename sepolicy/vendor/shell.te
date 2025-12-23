@@ -1,0 +1,10 @@
+allow shell serial_device:chr_file { getattr ioctl read write };
+allow shell sysfs:blk_file getattr;
+allow shell vendor_file:blk_file getattr;
+allow shell system_dlkm_file:blk_file getattr;
+allow shell metadata_file:file getattr;
+allow shell linkerconfig_file:file getattr;
+#allow shell mirror_data_file:file getattr;
+
+# b/303346666
+dontaudit shell adbd:{ socket vsock_socket } rw_socket_perms_no_ioctl;

@@ -1,0 +1,2 @@
+allow system_suspend debugfs_tracing_instances:dir search;
+allow system_suspend debugfs_tracing_instances:file { open write };

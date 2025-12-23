@@ -1,0 +1,3 @@
+genfscon debugfs /sys/kernel/debug/devices_deferred u:object_r:debugfs_devices_deferred:s0
+genfscon sysfs /dev/block/loop16 u:object_r:loop_devices:s0
+

@@ -1,0 +1,10 @@
+#############################
+# System files
+#
+/system/bin/odrefresh u:object_r:odrefresh_exec:s0
+#/system/bin/odsign u:object_r:odsign_exec:s0
+#/system/bin/storaged u:object_r:storaged_exec:s0
+/system/bin/hwservicemanager u:object_r:hwservicemanager_exec:s0
+#/system/bin/hw/android\.system\.suspend-service u:object_r:system_suspend_exec:s0
+/system_ext/bin/hw/android\.hidl\.allocator@1\.0-service u:object_r:hal_allocator_default_exec:s0
+

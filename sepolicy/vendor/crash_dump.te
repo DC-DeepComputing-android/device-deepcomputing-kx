@@ -1,0 +1,6 @@
+dontaudit crash_dump gpu_device:dir *;
+#allow crash_dump debugfs:file w_file_perms;
+allow crash_dump selinuxfs:file r_file_perms;
+debugfs_tracing_access(crash_dump)
+#allow crash_dump keystore_data_file:file { read open getattr map };
+allow crash_dump resourcecache_data_file:file { read open getattr map };

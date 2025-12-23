@@ -1,0 +1,3 @@
+#allow odsign debugfs:file { open write };
+allow odsign debugfs_tracing_instances:dir search;
+allow odsign debugfs_tracing_instances:file { open write };

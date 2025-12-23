@@ -1,0 +1,2 @@
+#allow statsd debugfs:file { open write };
+debugfs_tracing_access(statsd)

@@ -1,0 +1,4 @@
+# Device types
+type ab_block_device, dev_type;
+type rtk_bt_device, dev_type;
+

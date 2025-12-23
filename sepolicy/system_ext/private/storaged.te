@@ -1,0 +1,2 @@
+allow storaged debugfs_tracing_instances:dir search;
+allow storaged debugfs_tracing_instances:file { open write };

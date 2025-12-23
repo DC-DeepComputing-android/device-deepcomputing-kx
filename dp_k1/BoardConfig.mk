@@ -1,0 +1,122 @@
+include device/deepcomputing/kx/common/BoardConfigCommon.mk
+
+TARGET_BOARD_PLATFORM := dp_k1
+BOARD_BOOTCONFIG += androidboot.hardware=k1
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true
+
+#BOARD_SYSTEMIMAGE_PARTITION_SIZE := 912261120 #1073741824 #1024MB
+BOARD_FLASH_BLOCK_SIZE := 512
+
+#Vendor partition definition
+TARGET_COPY_OUT_VENDOR := vendor
+#BOARD_VENDORIMAGE_PARTITION_SIZE := 146800640 #1073741824  #1024MB
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_JOURNAL_SIZE := 0
+BOARD_VENDORIMAGE_EXTFS_INODE_COUNT := 2048
+
+# vendor_boot.img
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 0x02000000
+
+#AB, no retrofit
+BOARD_SUPER_PARTITION_SIZE := 4294967296 # 4GB
+BOARD_SUPER_PARTITION_GROUPS := k1_dynamic_partitions
+BOARD_K1_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor system_ext product
+BOARD_K1_DYNAMIC_PARTITIONS_SIZE := 2143289344 # 4GB/2 - 4M
+BOARD_SUPER_PARTITION_METADATA_DEVICE := super
+BOARD_BUILD_SUPER_IMAGE_BY_DEFAULT := true
+BOARD_SUPER_IMAGE_IN_UPDATE_PACKAGE := true
+
+BOARD_USES_METADATA_PARTITION := true
+
+# [TODO: support tee?]
+BOARD_SEPOLICY_DIRS += device/deepcomputing/kx/sepolicy/vendor
+#SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += device/deepcomputing/kx/sepolicy/system_ext/public
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/deepcomputing/kx/sepolicy/system_ext/private
+
+
+#Userdata partition definition
+#use "mmc part" to get userdata partition size in uboot console
+#0x0087c000      0x01d1efde      "userdata"
+#use "mmc info" to get block size
+#(0x01d1efde-0x0087c000+1)*512 = 11079237120
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648  ##11079237120
+TARGET_USERIMAGES_USE_F2FS := true
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
+
+#Cache partition definition
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
+
+#43M
+BOARD_BOOTIMAGE_PARTITION_SIZE := 0x2B00000
+
+#8M
+BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
+
+#64M
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
+
+
+BOARD_KERNEL_CMDLINE += printk.devkmsg=on
+BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/lib/firmware
+
+#Recovery
+TARGET_RECOVERY_FSTAB := device/deepcomputing/kx/dp_k1/fstab.k1
+TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+
+
+BOARD_BOOT_HEADER_VERSION := 4
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_INIT_BOOT_HEADER_VERSION := 4
+BOARD_MKBOOTIMG_INIT_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
+
+
+# AVB Feature
+# Specify vbmeta  certification and algorithms
+# Enable AVB
+# Please refer: https://android.googlesource.com/platform/external/avb/+/master/README.md
+BOARD_AVB_ENABLE := true
+BOARD_AVB_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_KEY_PATH := device/deepcomputing/kx/keys/kx_private.pem
+BOARD_AVB_ALGORITHM := SHA256_RSA2048
+
+# Specifiy vbmeta_system certificate, algorithms and rollback
+#BOARD_AVB_VBMETA_SYSTEM := system system_ext product
+#BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := device/deepcomputing/kx/keys/kx_private.pem
+#BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
+#BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+#BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
+
+# Enable chained boot images
+BOARD_AVB_BOOT_KEY_PATH := device/deepcomputing/kx/keys/kx_private.pem
+BOARD_AVB_BOOT_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION := 2
+
+BOARD_AVB_INIT_BOOT_KEY_PATH := device/deepcomputing/kx/keys/kx_private.pem
+BOARD_AVB_INIT_BOOT_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
+BOARD_AVB_INIT_BOOT_ROLLBACK_INDEX_LOCATION := 3
+
+#Configure jemalloc for low memory, and default to a single arena to minimizethe PSS consumed by jemalloc
+MALLOC_SVELTE :=true
+ENABLE_JEMALLOC_TCACHE :=true
+
+
+BOARD_ROOT_EXTRA_SYMLINKS += /vendor/firmware:/lib/firmware
+
+## Current version: PLATFORM_VERSION_LAST_STABLE==14
+## XC-TODO: set wifi chip
+BOARD_WIFI_VENDOR := realtek
+
+ifeq ($(BOARD_WIFI_VENDOR), realtek)
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_rtl
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_rtl
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_WLAN_DEVICE := realtek
+endif
+WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true

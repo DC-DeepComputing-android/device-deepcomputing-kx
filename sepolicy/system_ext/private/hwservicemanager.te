@@ -1,0 +1,1 @@
+#allow hwservicemanager debugfs:file { open write };

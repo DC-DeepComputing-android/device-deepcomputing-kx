@@ -1,0 +1,7 @@
+#allow apexd debugfs:file  { open write };
+debugfs_tracing_access(apexd)
+allow apexd device:blk_file { open read write ioctl };
+allow apexd sysfs:blk_file getattr;
+allow apexd vendor_file:blk_file getattr;
+allow apexd loop_devices:blk_file { open ioctl read write };
+allow apexd system_dlkm_file:blk_file getattr;

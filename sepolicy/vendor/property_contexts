@@ -1,0 +1,18 @@
+ro.boot.cpuvulkan.version  u:object_r:vendor_graphics_config_prop:s0 exact int
+ro.boot.hardware.egl u:object_r:vendor_graphics_config_prop:s0 exact string
+ro.boot.hardware.gralloc u:object_r:vendor_graphics_config_prop:s0 exact string
+ro.boot.hardware.hwcomposer u:object_r:vendor_graphics_config_prop:s0 exact string
+ro.boot.hardware.vulkan u:object_r:vendor_graphics_config_prop:s0 exact string
+ro.boot.lcd_density u:object_r:vendor_graphics_config_prop:s0 exact int
+ro.vendor.boot_security_patch u:object_r:vendor_boot_security_patch_level_prop:s0
+ro.vendor.hwcomposer.display_finder_mode  u:object_r:vendor_hwcomposer_prop:s0 exact string
+ro.vendor.hwcomposer.mode  u:object_r:vendor_hwcomposer_prop:s0 exact string
+ro.vendor.hwcomposer.pmem  u:object_r:vendor_hwcomposer_prop:s0 exact string
+vendor.wlan.firmware.version   u:object_r:vendor_wlan_versions_prop:s0 exact string
+vendor.wlan.driver.version     u:object_r:vendor_wlan_versions_prop:s0 exact string
+vendor.gralloc.trace           u:object_r:vendor_graphics_config_prop:s0
+ro.boot.usb_mode u:object_r:vendor_boot_prop:s0 exact int
+ro.boot.usb_speed u:object_r:vendor_boot_prop:s0 exact int
+#ro.boot.bootdevice u:object_r:vendor_boot_prop:s0 exact string
+ro.hwui.layer_cache_size u:object_r:vendor_boot_prop:s0 exact int
+gralloc.drm.kms u:object_r:vendor_graphics_config_prop:s0 exact string

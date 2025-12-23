@@ -1,0 +1,2 @@
+debugfs_tracing_access(vendor_modprobe)
+allow vendor_modprobe self:key write;

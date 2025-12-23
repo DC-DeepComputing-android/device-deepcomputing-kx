@@ -1,0 +1,31 @@
+# File types
+type vendor_net_data_file, file_type, data_file_type, core_data_file_type;
+
+type mmcblkXpXX_partition, dev_type;
+type dm_vendor_file, dev_type;
+type loop_devices, fs_type, sysfs_type;
+type dm_device_file, dev_type;
+type sysfs_iio_devices, fs_type, sysfs_type;
+type debugfs_devices_deferred, debugfs_type, fs_type;
+type mediadrm_vendor_data_file, file_type, data_file_type;
+type mcu_control_device, dev_type;
+type mcu_uart_device, dev_type;
+type bluetooth_vendor_data_file, file_type, data_file_type;
+
+allow debugfs_devices_deferred self:filesystem associate;
+allow debugfs_devices_deferred self:file getattr;
+
+allow debugfs sysfs:filesystem associate;
+#allow debugfs self:filesystem { getattr relabelto };
+allow debugfs self:filesystem associate;
+
+allow device self:blk_file { create setattr };
+
+allow loop_devices self:file  { create setattr };
+
+
+allow sysfs tmpfs:filesystem associate;
+allow sysfs self:file { open write };
+allow sysfs self:filesystem associate;
+
+allow vendor_net_data_file self:dir { setattr getattr search };

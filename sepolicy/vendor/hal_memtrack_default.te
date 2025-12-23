@@ -1,0 +1,2 @@
+debugfs_tracing_access(hal_memtrack_default)
+#allow hal_memtrack_default debugfs:file { open write };

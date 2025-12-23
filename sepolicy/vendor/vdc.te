@@ -1,0 +1,2 @@
+#allow vdc debugfs:file w_file_perms;
+debugfs_tracing_access(vdc)

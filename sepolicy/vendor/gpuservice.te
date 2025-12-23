@@ -1,0 +1,2 @@
+allow gpuservice gpu_device:dir { search ioctl };
+debugfs_tracing_access(gpuservice)

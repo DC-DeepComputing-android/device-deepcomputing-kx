@@ -1,0 +1,79 @@
+on post-fs-data
+    # bluetooth
+    #Already done in /system/core/rootdir/init.rc
+    #mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
+    #wifi
+    #mkdir /data/misc/wifi 0770 wifi wifi
+    #mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    #mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/vendor/wifi 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa 0770 wifi wifi
+    mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
+    mkdir /data/vendor/wifi/hostapd 0770 wifi wifi
+    mkdir /data/vendor/wifi/hostapd/sockets 0770 wifi wifi
+    setprop wifi.interface wlan0
+    setprop wifi.direct.interface p2p0
+    #chown dhcp dhcp /data/misc/dhcp
+
+on boot
+    # cost more than 30 seconds, it's better to do it later
+    exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/cfg80211.ko
+    exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/8852be.ko ifname=wlan0 if2name=p2p0
+
+on boot
+    #Already done in /system/core/rootdir/init.rc
+    #chown bluetooth net_bt_admin /data/misc/bluetooth
+    #mkdir /data/misc/bluedroid 0770 bluetooth net_bt_admin
+    # bluetooth LPM
+    chown bluetooth net_bt_admin /proc/bluetooth/sleep/lpm
+    chown bluetooth net_bt_admin /proc/bluetooth/sleep/btwrite
+
+    exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/bluetooth.ko
+    exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/btrtl.ko
+    exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/rtk_btusb.ko
+    chmod 0660 /dev/rtkbt_dev
+    chown bluetooth net_bt_admin /dev/rtkbt_dev
+
+    # rfkill
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/type
+    chown bluetooth net_bt_admin /sys/class/rfkill/rfkill0/state
+    chown bluetooth net_bt_admin /sys/class/rfkill/rfkill0/type
+    #bluetooth on for test
+    write /sys/class/rfkill/rfkill0/state 1
+
+    # bluetooth MAC address programming
+    chown bluetooth net_bt_admin ro.bt.bdaddr_path
+    chown bluetooth net_bt_admin /system/etc/bluetooth
+    #chown bluetooth net_bt_admin /data/misc/bluetooth
+    #setprop ro.bt.bdaddr_path "/data/misc/bluetooth/bdaddr"
+
+service dhcpcd_bnep0 /system/bin/dhcpcd -BKLG
+    disabled
+    oneshot
+
+service dhcpcd_bnep1 /system/bin/dhcpcd -BKLG
+    disabled
+    oneshot
+
+service dhcpcd_bnep2 /system/bin/dhcpcd -BKLG
+    disabled
+    oneshot
+
+service dhcpcd_bnep3 /system/bin/dhcpcd -BKLG
+    disabled
+    oneshot
+
+service dhcpcd_bnep4 /system/bin/dhcpcd -BKLG
+    disabled
+    oneshot
+
+service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_bt-pan /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot

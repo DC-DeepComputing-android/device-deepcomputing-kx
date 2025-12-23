@@ -1,0 +1,23 @@
+on boot
+    # Already done in /system/core/rootdir/init.rc
+    # mount configfs none /config
+    mkdir /config/usb_gadget/g1 0770 shell shell
+    write /config/usb_gadget/g1/idVendor 0x361c
+    write /config/usb_gadget/g1/idProduct 0x0008
+    mkdir /config/usb_gadget/g1/strings/0x409 0770 shell shell
+    setprop ro.serialno "20211102"
+    write /config/usb_gadget/g1/strings/0x409/serialnumber ${ro.serialno}
+    write /config/usb_gadget/g1/strings/0x409/manufacturer "Spacemit"
+    write /config/usb_gadget/g1/strings/0x409/product "K1 ADB"
+    mkdir /config/usb_gadget/g1/configs/b.1 0770 shell shell
+    write /config/usb_gadget/g1/configs/b.1/bmAttributes 0xc0
+    write /config/usb_gadget/g1/configs/b.1/MaxPower 500
+    mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770 shell shell
+
+    mkdir /config/usb_gadget/g1/functions/ffs.adb
+    symlink /config/usb_gadget/g1/functions/ffs.adb/ /config/usb_gadget/g1/configs/b.1/ffs.adb
+    mkdir /dev/usb-ffs 0775 shell shell
+    mkdir /dev/usb-ffs/adb 0770 shell shell
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+    setprop sys.usb.controller "c0900100.udc"
+    setprop sys.usb.configfs 1
